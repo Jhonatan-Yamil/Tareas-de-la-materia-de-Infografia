@@ -1,10 +1,18 @@
 import arcade
+import random
 from game_object import Polygon2D
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 SCREEN_TITLE = "Polygon2d"
 
+
+def get_random_color():
+    return (
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+    )
 
 class App(arcade.Window):
     def __init__(self):
@@ -13,34 +21,58 @@ class App(arcade.Window):
         self.objects = []
 
     def on_key_release(self, symbol: int, modifiers: int):
-        if symbol == arcade.key.C:
+        if symbol == arcade.key.RIGHT:
+            for obj in self.objects:
+                obj.translate(10, 0)
+        elif symbol == arcade.key.LEFT:
+            for obj in self.objects:
+                obj.translate(-10, 0)
+        elif symbol == arcade.key.UP:
+            for obj in self.objects:
+                obj.translate(0, 10)
+        elif symbol == arcade.key.DOWN:
+            for obj in self.objects:
+                obj.translate(0, -10)
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        if button == arcade.MOUSE_BUTTON_LEFT:
             self.objects.append(
                 Polygon2D(
                     vertices=[
-                        (SCREEN_WIDTH // 2 - 50, SCREEN_HEIGHT // 2 - 50),
-                        (SCREEN_WIDTH // 2 - 50, SCREEN_HEIGHT // 2 + 50),
-                        (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 50),
-                        (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50),
+                        (x - 50, y - 50),
+                        (x - 50, y + 50),
+                        (x + 150, y + 50),
+                        (x + 150, y - 50),
                     ],
-                    color=arcade.color.YELLOW,
+                    color=get_random_color(),
                 )
             )
+            self.objects.append(
+                Polygon2D(
+                    vertices=[
+                        (x, y+ 50 ),
+                        (x, y + 150),
+                        (x + 100, y + 150),
+                        (x + 100, y + 50),
+                    ],
+                    color=get_random_color(),
+                )
+            )
+            self.objects.append(
+                Polygon2D(
+                    vertices=[
+                        (x+100, y+ 100 ),
+                        (x+100, y + 125),
+                        (x + 150, y + 125),
+                        (x + 150, y + 100),
+                    ],
+                    color=get_random_color(),
+                )
+            )
+            
             print(f"objetos: {len(self.objects)}")
         
-    def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
-        self.objects.append(
-            Polygon2D(
-                vertices=[
-                    (x-50,y-50),
-                    (x-50,y+50),
-                    (x+50,y+50),
-                    (x+50,y-50)
-                ],
-                color=arcade.color.YELLOW
-            )
-        )
-        return super().on_mouse_release(x, y, button, modifiers)
-    
+
     def on_draw(self):
         arcade.start_render()
         for obj in self.objects:
