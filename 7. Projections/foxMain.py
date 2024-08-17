@@ -5,7 +5,7 @@ from game_object import Object3D
 # Definición de constantes
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
-SCREEN_TITLE = "Proyección 3D con Cabeza de Zorro que sigue el cursor"
+SCREEN_TITLE = "Proyección 3D con Cabeza de Zorro que sigue el cursor, Jhonatan Yamil Cabezas"
 ROTATION_SPEED = 0.01
 
 class App(arcade.Window):
@@ -47,7 +47,6 @@ class App(arcade.Window):
         self.fox_head.translate(400, 400, 0) 
         self.fox_head.scale(200, 200, 200)   
         
-        # Variables para manejar la rotación
         self.target_angle_x = 0  # Ángulo objetivo de rotación en X
         self.target_angle_y = 0  # Ángulo objetivo de rotación en Y
 
@@ -57,7 +56,7 @@ class App(arcade.Window):
             self.fox_head.rotate(self.target_angle_y*ROTATION_SPEED, "y", pivot=self.fox_head.get_center())
             self.fox_head.rotate(self.target_angle_x*ROTATION_SPEED, "x", pivot=self.fox_head.get_center())
 
-            # Resetear los ángulos objetivo para evitar rotaciones adicionales
+            # Evita rotaciones adicionales
             self.target_angle_x = 0
             self.target_angle_y = 0
 
@@ -67,6 +66,7 @@ class App(arcade.Window):
         self.fox_head.draw()
 
     def on_mouse_motion(self, x: int, y: int, dx: int, dy: int):
+        
         # Calcular el cambio en ángulo basado en la posición del cursor
         self.target_angle_y =-(x - SCREEN_WIDTH / 2) * ROTATION_SPEED
         self.target_angle_x = (y - SCREEN_HEIGHT / 2) * ROTATION_SPEED
