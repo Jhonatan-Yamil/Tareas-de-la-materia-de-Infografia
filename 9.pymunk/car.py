@@ -29,7 +29,7 @@ class Car:
         f_wheel_shape.density = 0.01
         f_wheel_shape.friction = 0.5
         f_wheel_shape.elasticity = 1
-        # self.f_wheel_sprite = arcade.SpriteCircle(20, arcade.color.GREEN)
+        self.f_wheel_sprite = arcade.SpriteCircle(20, arcade.color.GREEN)
         
         r_wheel_body = pymunk.Body()
         r_wheel_body.position = (x - 50, y - 35)
@@ -37,7 +37,7 @@ class Car:
         r_wheel_shape.density = 0.01
         r_wheel_shape.friction = 0.5
         r_wheel_shape.elasticity = 1
-        # self.r_wheel_sprite = arcade.SpriteCircle(20, arcade.color.GREEN)
+        self.r_wheel_sprite = arcade.SpriteCircle(20, arcade.color.GREEN)
 
        # Joints for wheels
         f_joint = pymunk.PinJoint(chassis_body, f_wheel_body, (50, -35), (0, 0))
@@ -63,8 +63,6 @@ class Car:
 
         # Sprites
         self.chassis_sprite = arcade.SpriteSolidColor(100, 70, arcade.color.RED)
-        self.f_wheel_sprite = arcade.SpriteCircle(20, arcade.color.GREEN)
-        self.r_wheel_sprite = arcade.SpriteCircle(20, arcade.color.GREEN)
 
         self.sprites = arcade.SpriteList()
         self.sprites.append(self.chassis_sprite)
